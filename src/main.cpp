@@ -5,6 +5,12 @@
 #include <vector>
 #include <algorithm>
 #include <functional>
+#include <cmath>
+#include <cfenv>
+#include <cmath>
+#include <iomanip>
+#include <iostream>
+#include <utility>
 
 using namespace std;
 
@@ -43,11 +49,11 @@ public:
     BitMap(std::vector<unsigned int> input)
     {
         cout << "BitMap()" << endl;
-        auto max = *max_element(std::cbegin(input), std::cend(input)); // C++11
+        unsigned int max = *max_element(std::cbegin(input), std::cend(input)); // C++11
         
         cout << "Max value: " << max << endl;
-        cout << "Size of unsigned int: " << sizeof(unsigned int) << endl;
-        auto vector_init_size = (unsigned int)((max / sizeof(unsigned int)) + 1);
+        cout << "Size of unsigned int in bytes: " << sizeof(unsigned int) << endl;
+        auto vector_init_size = (unsigned int)std::ceil(max / (sizeof(unsigned int) * 8)) + 1;
         cout << "Size of vector: " << vector_init_size << endl;
         bitmap = std::vector<unsigned int>(vector_init_size, 0);
 
@@ -60,12 +66,13 @@ public:
         );
     }
 
+
     BitMap(unsigned int max_value)
     {
         cout << "BitMap()" << endl;
         cout << "Max value: " << max_value << endl;
-        cout << "Size of unsigned int: " << sizeof(unsigned int) << endl;
-        auto vector_init_size = (unsigned int)((max_value / sizeof(unsigned int)) + 1);
+        cout << "Size of unsigned int in bytes: " << sizeof(unsigned int) << endl;
+        unsigned int vector_init_size = (unsigned int)std::ceil(max_value / (sizeof(unsigned int) * 8)) + 1;
         cout << "Size of vector: " << vector_init_size << endl;
         bitmap = std::vector<unsigned int>(vector_init_size, 0);
 
@@ -93,8 +100,17 @@ int main()
         cout << "is " << search << " exist? " << bitmap.is_key_exist(search) << endl; // true
     }
     {
-        BitMap bitmap(1000000000);
+        BitMap bitmap(31);
     }
+    {
+        BitMap bitmap(32);
+    }
+    {
+        // 4294967295, Math.pow(2, 32) - 1, is the largest positive value an int variable can store
+        // too big
+        // BitMap bitmap(4294967295);
+    }
+
     cin.get();
     return 0;
 }
