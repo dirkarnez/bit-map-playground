@@ -47,10 +47,30 @@ public:
         
         cout << "Max value: " << max << endl;
         cout << "Size of unsigned int: " << sizeof(unsigned int) << endl;
-        bitmap = std::vector<unsigned int>((unsigned int)(max / sizeof(unsigned int) + 1), 0);
+        auto vector_init_size = (unsigned int)((max / sizeof(unsigned int)) + 1);
+        cout << "Size of vector: " << vector_init_size << endl;
+        bitmap = std::vector<unsigned int>(vector_init_size, 0);
 
-        std::for_each(std::cbegin(input), std::cend(input), [this](const unsigned int &n)
-                      { this->set_key(n); });
+        std::for_each(
+            std::cbegin(input), 
+            std::cend(input), 
+            [this](const unsigned int &n){ 
+                this->set_key(n); 
+            }
+        );
+    }
+
+    BitMap(unsigned int max_value)
+    {
+        cout << "BitMap()" << endl;
+        cout << "Max value: " << max_value << endl;
+        cout << "Size of unsigned int: " << sizeof(unsigned int) << endl;
+        auto vector_init_size = (unsigned int)((max_value / sizeof(unsigned int)) + 1);
+        cout << "Size of vector: " << vector_init_size << endl;
+        bitmap = std::vector<unsigned int>(vector_init_size, 0);
+
+        // std::for_each(std::cbegin(input), std::cend(input), [this](const unsigned int &n)
+        //               { this->set_key(n); });
     }
 
     bool is_key_exist(const unsigned int &key)
@@ -63,15 +83,18 @@ public:
 
 int main()
 {
-    std::vector<unsigned int> input = {16, 2, 77, 40, 12071};
-    BitMap bitmap(input);
+    {
+        BitMap bitmap(std::vector<unsigned int>{16, 2, 77, 40, 12071});
 
-    unsigned int search = 1234;
-    cout << "is " << search << " exist? " << bitmap.is_key_exist(search) << endl; // false
+        unsigned int search = 1234;
+        cout << "is " << search << " exist? " << bitmap.is_key_exist(search) << endl; // false
 
-    search = 77;
-    cout << "is " << search << " exist? " << bitmap.is_key_exist(search) << endl; // true
-
+        search = 77;
+        cout << "is " << search << " exist? " << bitmap.is_key_exist(search) << endl; // true
+    }
+    {
+        BitMap bitmap(1000000000);
+    }
     cin.get();
     return 0;
 }
