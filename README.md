@@ -2,7 +2,7 @@ bit-map-playground
 ==================
 ### TLDR
 - bit-map uses an integer / an array of integers as boolean values - each integer becomes 32 boolean value (int takes 4 bytes = 32 bit)
-  - integer typically means `uint32_t`
+  - integer typically means `uint32_t` (unsigned and 32 bit)
   
 ### Notes
 - C++17 is required
