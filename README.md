@@ -1,5 +1,8 @@
 bit-map-playground
 ==================
+### TLDR
+- bit-map uses an integer / an array of integers as boolean values - each integer becomes 32 boolean value (int takes 4 bytes = 32 bit)
+
 ### Notes
 - C++17 is required
 - `int` (or `long`) array in which each element are responsible for 32 positive integers - `arr[0]` for `0` - `31`, `arr[1]` for `32` - `63`...
